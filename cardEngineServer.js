@@ -5,7 +5,7 @@ var players = [];
 var games = [new Game("game0", 4)];
 var anyGameIndex = 0;
 
-const server = new WebSocket.Server({port: 80});
+const server = new WebSocket.Server({port: 81});
 server.on("connection", (socket) => {
 
     if (socket.protocol !== "cards")
