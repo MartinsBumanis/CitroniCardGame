@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Program jss",
+            "cwd": "${workspaceFolder}/public/js/*.js",
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/",
+         "outFiles": [
+                "${workspaceFolder}/public/js/*.js",
+                "!**/node_modules/**"
+            ],
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node",
+            "runtimeExecutable": "node"
+        },
+
+
+   
+    ],
+    "compounds": []
+}
