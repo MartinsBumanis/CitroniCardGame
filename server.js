@@ -2,7 +2,6 @@ require("./cardEngineServer");
 
 const express = require("express");
 const expressSession = require("express-session");
-var https = require('https');
 const path = require("path");
 
 const app = express();
