@@ -16,3 +16,5 @@ Special cards:
 * Joker - burn the stack
 
 * 4 of the same burns the stack.
+
+Original code from [CodeStix](https://github.com/CodeStix/shithead-the-game) https://github.com/CodeStix/shithead-the-game
