@@ -17,4 +17,4 @@ Special cards:
 
 * 4 of the same burns the stack.
 
-Original code from [CodeStix](https://github.com/CodeStix/shithead-the-game) .
+Original code from [CodeStix](https://github.com/CodeStix/shithead-the-game).
