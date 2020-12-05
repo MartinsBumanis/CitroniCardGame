@@ -18,3 +18,7 @@ Special cards:
 * 4 of the same burns the stack.
 
 Original code from [CodeStix](https://github.com/CodeStix/shithead-the-game).
+
+The current state of the game requires a HTTP connection, won't work with HTTPS.
+
+To deploy to localhost put "localhost:81" in the GameScene.js websocket variable or IP address for online.
