@@ -343,21 +343,21 @@ class ShitHeadHandler extends GameScene {
 
                 // creating card strings, shuffling them, then sending to clients
                 var cards = [];
-                
-           //This is for testing purposes, has only Jokers
+
+                //This is for testing purposes, has only Jokers
                 for (let i = 0; i < 52; i++)
-               
 
-                 cards.push("4:0");
-                 cards.push("4:0");
-            //end of testing purpose with jokers
 
-            //This is the regular card dealing code
+                    cards.push("4:0");
+                cards.push("4:0");
+                //end of testing purpose with jokers
+
+                //This is the regular card dealing code
                 //for (let i = 0; i < 52; i++)
-               //     cards.push(Math.floor(i / 13) + ":" + (i % 13 + 1));
-               // cards.push("4:0");
-               // cards.push("4:0");
-//end of regular card dealing code
+                //     cards.push(Math.floor(i / 13) + ":" + (i % 13 + 1));
+                // cards.push("4:0");
+                // cards.push("4:0");
+                //end of regular card dealing code
                 console.log("gamemode", this.gameModeButton.text);
                 if (this.gameModeButton.text === "Gamemode: One 10") // add 4 extra 10s
                 {
@@ -463,8 +463,8 @@ class ShitHeadHandler extends GameScene {
                 if (this.getPlayerStage(this.localPlayer) === 2) // if final hidden stack move
                 {
                     if (!mayThrow) {
-                       
-                        if (this.previouslyThrownValueThisRound === null) 
+
+                        if (this.previouslyThrownValueThisRound === null)
                             newCard.flipCard(true);
                         setTimeout(() => newCard.flipCard(true), 2000); //flipped card becomes seen for the local player, not for others
                         this.takeThrowStack(); //takes the whole stack except the unsuccesfully thrown card
@@ -493,22 +493,7 @@ class ShitHeadHandler extends GameScene {
                     this.previouslyThrownValueThisRound = null;
                     var playerStage = this.getPlayerStage(this.playerAtTurn);
                     this.takeMinCards();
-
-                    var playerStage = this.getPlayerStage(this.playerAtTurn);
-                    if (playerStage === 3) // if player is out
-                    {
-                        this.playerAtTurn.playerNameText.setColor("#f0f");
-                        if (!this.playerWon){
-                            this.playerWon = this.playerAtTurn;
-                            //this.readyButton.visible = true;
-                            if (this.localPlayer.inventory.containingCards.length === 0) {
-                            this.server.send("broadcastall turn " + this.getNextTurnPlayer(this.skipTurns).name);
-                           
-                        }
-
-               
                 }
-                }}
                 // else if (newCard.cardValue === 6)
                 //  {
                 //     this.skipTurns++;
@@ -549,6 +534,8 @@ class ShitHeadHandler extends GameScene {
 
                     if (!burn) {
                         this.readyButton.visible = true;
+                    }else if(playerStage === 3){
+                        this.readyButton.visible = true;
                     }
                 }
             };
@@ -565,13 +552,13 @@ class ShitHeadHandler extends GameScene {
         this.readyButton.visible = false;
     }
 
-    
+
     takeThrowStackwithHidden(newCard) {
         var throwStack = this.getStack("throw");
         this.server.send("broadcast deal " + throwStack.containingCards.length + " throw " + stackToString(this.localPlayer.inventory) + "|broadcastall turn " + this.getNextTurnPlayer().name);
         this.dealCards(throwStack, [this.localPlayer.inventory], throwStack.containingCards.length);
         var throwStack = this.getStack("throw");
-     
+
         this.dealCards(newCard, [this.localPlayer.inventory], newCard.length);
         this.readyButton.visible = false;
     }
@@ -718,14 +705,14 @@ class ShitHeadHandler extends GameScene {
                 return false;
         }
 
-     //   if (throwStack.getTopCard() &&
-       //     throwStack.getTopCard().cardValue === card.cardValue &&
-      ////      (throwStack.getSameValueDepthFromTop() + this.countCardValues(player, card.cardValue)) >= (card.cardType === JOKER ? 2 : 4)) // allow if can complete set
-       // {
-      //      console.log("mayCardBeThrown()", "2 JOKERS or 4 OTHERS");
-      //      return true;
-       // }
-          if (this.previouslyThrownValueThisRound !== null) // only allow doubles
+        //   if (throwStack.getTopCard() &&
+        //     throwStack.getTopCard().cardValue === card.cardValue &&
+        ////      (throwStack.getSameValueDepthFromTop() + this.countCardValues(player, card.cardValue)) >= (card.cardType === JOKER ? 2 : 4)) // allow if can complete set
+        // {
+        //      console.log("mayCardBeThrown()", "2 JOKERS or 4 OTHERS");
+        //      return true;
+        // }
+        if (this.previouslyThrownValueThisRound !== null) // only allow doubles
         {
             console.log("YOU ALREADY THREW THIS ROUND!");
             return this.previouslyThrownValueThisRound === card.cardValue;
@@ -750,8 +737,8 @@ class ShitHeadHandler extends GameScene {
             return true;
 
         } //else if (cardValue === 10 || cardValue === JOKER) {
-          //  console.log("mayCardBeThrown()", "10 or joker");
-          //  return true;
+        //  console.log("mayCardBeThrown()", "10 or joker");
+        //  return true;
 
         //} 
         else if (cardValue === 4) {
