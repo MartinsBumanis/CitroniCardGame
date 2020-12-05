@@ -345,18 +345,18 @@ class ShitHeadHandler extends GameScene {
                 var cards = [];
 
                 //This is for testing purposes, has only Jokers
-                for (let i = 0; i < 52; i++)
+               // for (let i = 0; i < 52; i++)
 
 
-                    cards.push("4:0");
-                cards.push("4:0");
+              //      cards.push("4:0");
+               // cards.push("4:0");
                 //end of testing purpose with jokers
 
                 //This is the regular card dealing code
-                //for (let i = 0; i < 52; i++)
-                //     cards.push(Math.floor(i / 13) + ":" + (i % 13 + 1));
-                // cards.push("4:0");
-                // cards.push("4:0");
+                for (let i = 0; i < 52; i++)
+                     cards.push(Math.floor(i / 13) + ":" + (i % 13 + 1));
+                 cards.push("4:0");
+                 cards.push("4:0");
                 //end of regular card dealing code
                 console.log("gamemode", this.gameModeButton.text);
                 if (this.gameModeButton.text === "Gamemode: One 10") // add 4 extra 10s
