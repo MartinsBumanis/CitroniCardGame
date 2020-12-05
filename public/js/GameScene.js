@@ -34,7 +34,7 @@ class GameScene extends Phaser.Scene {
         statusText.setFontSize(12);
         statusText.setDepth(10000000);
         //this is responsible for connections. If you use DigitalOcean droplets, this is where the floating IP goes
-        this.server = new WebSocket("ws://localhost:81", "cards"); //178.128.139.28:81 , change this to your server IP/floating IP
+        this.server = new WebSocket("ws://178.128.139.28:81", "cards"); //178.128.139.28:81 , change this to your server IP/floating IP
         var didConnect = false;
         this.server.onopen = () => {
 
