@@ -242,6 +242,7 @@ class ShitHeadHandler extends GameScene {
 
         return lowestPlayer;
     }
+    //TODO: Take all cards in stack button
 
     onGameStateChange(newState) {
         console.log("new game state", newState);
@@ -265,7 +266,7 @@ class ShitHeadHandler extends GameScene {
                 player.finalStack1.onCardWantsToGoHere = cardGoFinalStackContition;
                 player.finalStack2.onCardWantsToGoHere = cardGoFinalStackContition;
                 player.finalStack3.onCardWantsToGoHere = cardGoFinalStackContition;
-
+//TODO: make the cards go in inventory instead of back to original place
                 player.finalStack1.onAddingCardToTop = (newCard) => {
 
                     if (player.finalStack1.containingCards.length === 1)
