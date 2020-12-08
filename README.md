@@ -1,6 +1,6 @@
 # Citroni: The Game
 
-Play the game at [citroni.arcadenexus.com](http://citroni.arcadenexus.com/) or [ej.uz/citroni](http://ej.uz/citroni).
+Play the game at [ej.uz/citroni](http://ej.uz/citroni).
 
 ## Rules
 This is a variation of the game Sh*thead, from the computer science students of RTU. Original rules:  [wikipedia](https://en.wikipedia.org/wiki/Shithead_(card_game)).
