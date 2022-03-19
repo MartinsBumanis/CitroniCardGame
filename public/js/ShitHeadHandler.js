@@ -423,6 +423,7 @@ class ShitHeadHandler extends GameScene {
             this.readyButton.on("pointerdown", () => {
 
                 this.server.send("broadcastall turn " + this.getNextTurnPlayer(this.skipTurns).name);
+                this.takeAllButton.visible = false;
                 this.readyButton.visible = false;
             });
 
@@ -521,7 +522,6 @@ class ShitHeadHandler extends GameScene {
                     if (this.players.filter((pl) => this.getPlayerStage(pl) === 3).length >= this.players.length - 1) {
                         this.turnText.text = this.playerWon.name + " won!";
                         this.turnText.setColor("#f0f");
-                        this.readyButton.visible = false;
                         return;
                     }
                 }
@@ -622,6 +622,7 @@ class ShitHeadHandler extends GameScene {
             this.takeMinCards();
 
         setTimeout(() => playerTurnEnd.inventory.sortCardsPerValue(), 750);
+        this.readyButton.visible = false;
     }
 
     onTurnStart(playerAtTurn) {
@@ -631,9 +632,33 @@ class ShitHeadHandler extends GameScene {
         this.turnText.setColor(this.isAtTurn() ? "#0f0" : "#fff");
         this.skipTurns = 1;
         playerAtTurn.playerNameText.setColor("#0f0");
-
+        const takeAllButtonStyle = {
+            backgroundColor: "#271",
+            padding: 6,
+            fontSize: 20,
+            fixedWidth: 0.42 * this.game.config.width,
+            align: "center",
+            fontFamily: "Wellfleet"
+        };
+           
+        
         if (this.isAtTurn()) {
             var shouldTryThrow = false;
+            
+            var throwStack = this.getStack("throw");
+            if(throwStack.containingCards.length >= 1){
+            this.takeAllButton = this.add.text(0.3 * this.game.config.width, 0.25 * this.game.config.height, "Take All Cards", takeAllButtonStyle);
+            this.takeAllButton.setInteractive()
+        
+            this.takeAllButton.text = "Take All Cards";
+            this.takeAllButton.on("pointerdown", () => {
+
+            this.readyButton.visible = false;
+            this.gameModeButton.visible = false;
+            this.takeAllButton.visible = false;
+            this.takeAllButton = this.takeThrowStack();
+            //this.server.send("gamestate startOfGame");
+            });}
             if (this.turnStartPlayerStage === 0) {
                 shouldTryThrow = !this.localPlayer.inventory.containingCards.every((card) => !this.canPlay(card, this.localPlayer));
             } else if (this.turnStartPlayerStage === 1) {
