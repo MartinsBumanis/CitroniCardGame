@@ -468,7 +468,9 @@ class ShitHeadHandler extends GameScene {
 
                         if (this.previouslyThrownValueThisRound === null)
                             newCard.flipCard(true);
+                            newCard.snappedToStack();
                         setTimeout(() => newCard.flipCard(true), 2000); //flipped card becomes seen for the local player, not for others
+                        
                         this.takeThrowStack(); //takes the whole stack except the unsuccesfully thrown card
                     }
 
