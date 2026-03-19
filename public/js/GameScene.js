@@ -21,10 +21,15 @@ class GameScene extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image("background", "/img/background-start.jpg");
         this.load.image("cardstack", "/img/cardstack.png");
     }
 
     create() {
+        var background = this.add.image(config.width / 2, config.height / 2, "background");
+        background.setDisplaySize(config.width, config.height);
+        background.setDepth(0);
+
         var statusText = this.add.text(0, 10, "Connecting...", {
             fixedWidth: config.width,
             align: "center",
@@ -34,7 +39,7 @@ class GameScene extends Phaser.Scene {
         statusText.setFontSize(12);
         statusText.setDepth(10000000);
         //this is responsible for connections. If you use DigitalOcean droplets, this is where the floating IP goes
-        this.server = new WebSocket("ws://178.128.139.28:81", "cards"); //178.128.139.28:81 , change this to your server IP/floating IP
+        this.server = new WebSocket("ws://citroni.lv:3001", "cards"); //178.128.139.28:81 , change this to your server IP/floating IP
         var didConnect = false;
         this.server.onopen = () => {
 

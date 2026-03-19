@@ -13,6 +13,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "twig": "^1.14.0",
+    "websockets": "^0.2.0",
     "ws": "^7.2.1"
   }
 }
