@@ -20,15 +20,25 @@
     <link rel="stylesheet" href="/css/styles.css">
     <title>Citroni: The Game</title>
     <style>
-        body {
-            /* This ensures the background image covers the whole page */
-            background-image: url('/img/background-start.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: white; /* Makes text readable against a darker background */
-        }
+    body {
+        background-image: url('/img/background-start.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: white; 
+    }
+    
+    /* Style for the new image to keep it responsive */
+    .hero-image {
+        width: 100%;
+        max-width: 100px;
+        height: auto;
+        display: block;
+        margin: 20px auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
 
         /* Adds a slight dark overlay so the form and text stay readable */
         body::before {
@@ -52,7 +62,11 @@
 <body>
     <h3 id="main-header" class="text-center">Citroni<small class="text-muted"> The Game</small></h3>
     <div class="container">
+        
+        <img src="/img/area-205-logo.jpeg" alt="Citroni Game Logo" class="hero-image">
+
         <div class="space"></div>
+        
         {% for problem in problems %}
         <div class="alert alert-danger space">
             <strong>Error:</strong> {{problem}}
@@ -71,18 +85,17 @@
                 <input type="submit" class="btn btn-primary btn-lg btn-block" value="Set name">
             </form>
         {% endif %}
-<div>
-<p>Special cards:
-<p>3 - starts from beginning</p>
-<p>6 - transparent, keeps the value from last card</p>
-<p>10 - burns the stack</p>
-<p>Joker - burns the stack</p>
-<p>4 of the same burns the stack.</p>
-</p>
-</div>
+
+        <div class="mt-4">
+            <h5>Special cards:</h5>
+            <ul class="list-unstyled">
+                <li><strong>3</strong> - starts from beginning</li>
+                <li><strong>6</strong> - transparent, keeps the value from last card</li>
+                <li><strong>10</strong> - burns the stack</li>
+                <li><strong>Joker</strong> - burns the stack</li>
+                <li><strong>4 of the same</strong> burns the stack.</li>
+            </ul>
+        </div>
     </div>
-    <footer class="font-small text-muted" id="footer">
-        <p>By Martins Bumanis | 2020 | <a href="https://github.com/MartinsBumanis/CitroniCardGame">GitHub</a></p>
-    </footer>
-</body>
+    </body>
 </html>
