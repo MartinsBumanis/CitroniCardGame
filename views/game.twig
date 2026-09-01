@@ -39,7 +39,7 @@
             scene: []
         };
 
-        var gameObject = new {{gameName}}Handler("{{playerName}}");
+        var gameObject = new {{gameName}}Handler("{{playerName}}", "{{lobbyName}}");
         config.scene.push(gameObject);
 
         var game = new Phaser.Game(config);

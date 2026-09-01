@@ -3,11 +3,12 @@ function stackToString(stack) {
 }
 
 class GameScene extends Phaser.Scene {
-    constructor(localPlayerName) {
+    constructor(localPlayerName, lobbyName = null) {
         super({
             key: "GameScene"
         });
         console.log("YOUR NAME", localPlayerName);
+        this.lobbyName = lobbyName || null;
         this.localPlayer = {
             name: localPlayerName
         };
@@ -39,13 +40,17 @@ class GameScene extends Phaser.Scene {
         statusText.setFontSize(12);
         statusText.setDepth(10000000);
         //this is responsible for connections. If you use DigitalOcean droplets, this is where the floating IP goes
-        this.server = new WebSocket("wss://citroni.lv/ws", "cards"); //178.128.139.28:81 , change this to your server IP/floating IP
+        var serverUrl = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+            ? "ws://" + location.hostname + ":3001"
+            : "wss://citroni.lv/ws"; //178.128.139.28:81 , change this to your server IP/floating IP
+        this.server = new WebSocket(serverUrl, "cards");
         var didConnect = false;
         this.server.onopen = () => {
 
             didConnect = true;
             statusText.text = "";
-            this.server.send("setplayer " + this.localPlayer.name + "|joinany");
+            var joinCommand = this.lobbyName ? "join " + this.lobbyName : "joinany";
+            this.server.send("setplayer " + this.localPlayer.name + "|" + joinCommand);
         };
         this.server.onmessage = (event) => {
 
