@@ -62,6 +62,7 @@ app.get("/logout", (req, res, next) => {
 
 app.get("/lobbies", (req, res, next) => {
 
+    res.set("Cache-Control", "no-store"); // the lobby list must never be cached (browser or CDN)
     res.json(cardEngine.getLobbies());
 });
 
