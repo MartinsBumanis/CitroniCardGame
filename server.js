@@ -1,4 +1,4 @@
-require("./cardEngineServer");
+const cardEngine = require("./cardEngineServer");
 
 const express = require("express");
 const expressSession = require("express-session");
@@ -32,6 +32,9 @@ app.get("/", (req, res, next) => {
             case "invalid-game-name":
                 problems = ["An invalid game name was given, please specify a name containing only a-z0-9_@&+.,?-"];
                 break;
+            case "invalid-lobby-name":
+                problems = ["An invalid lobby name was given, please specify a name of 1-16 characters containing only a-z0-9_-"];
+                break;
         }
     }
 
@@ -57,16 +60,26 @@ app.get("/logout", (req, res, next) => {
     res.redirect("/");
 });
 
+app.get("/lobbies", (req, res, next) => {
+
+    res.set("Cache-Control", "no-store"); // the lobby list must never be cached (browser or CDN)
+    res.json(cardEngine.getLobbies());
+});
+
 app.get("/game", (req, res, next) => {
 
     const gameName = req.query.gameName || "ShitHead";
     if (!gameName.match(/^[a-z0-9_]{1,32}$/i))
         return res.redirect("/?problem=invalid-game-name");
+    const lobbyName = req.query.lobby || "";
+    if (lobbyName && !lobbyName.match(/^[a-z0-9_-]{1,16}$/i))
+        return res.redirect("/?problem=invalid-lobby-name");
     if (!req.session.playerName)
         return res.redirect("/?problem=no-player");
 
     res.render("game", {
         gameName: gameName,
+        lobbyName: lobbyName,
         playerName: req.session.playerName
     });
 });

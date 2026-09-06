@@ -76,8 +76,7 @@
         {% if playerName != null %}
             <h4 class="text-success">Welcome back, {{playerName}}!</h4>
             <p>You are ready to play.</p>
-            <a href="/game" type="button" class="btn btn-primary btn-lg btn-block">Join newest room</a>
-            <a href="/logout" type="button" class="btn btn-danger btn-sm btn-block">Logout</a>
+            <a href="/game" type="button" class="btn btn-primary btn-lg btn-block">Quick play</a>
         {% else %}
             <p>Before you can play, you must enter a name to identify yourself.</p>
             <form action="/setName" method="POST">
@@ -85,6 +84,98 @@
                 <input type="submit" class="btn btn-primary btn-lg btn-block" value="Set name">
             </form>
         {% endif %}
+
+        <div class="mt-4 p-3 rounded" style="background-color: rgba(0, 0, 0, 0.5);">
+            <h5>Lobbies</h5>
+            <div id="lobby-list">
+                <p class="text-muted mb-0">Loading lobbies...</p>
+            </div>
+            {% if playerName != null %}
+            <form action="/game" method="GET" class="form-row mt-3">
+                <div class="col">
+                    <input type="text" class="form-control" name="lobby" placeholder="new lobby name" required maxlength="16" pattern="[A-Za-z0-9_\-]{1,16}" title="1-16 characters: a-z, 0-9, _ or -">
+                </div>
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-success" value="Create lobby">
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+        {% if playerName != null %}
+        <a href="/logout" type="button" class="btn btn-danger btn-sm btn-block mt-3">Logout</a>
+        {% endif %}
+
+        <script>
+            var canJoin = {% if playerName != null %}true{% else %}false{% endif %};
+
+            function renderLobbies(lobbies) {
+                var list = document.getElementById("lobby-list");
+                list.innerHTML = "";
+                if (lobbies.length === 0) {
+                    var empty = document.createElement("p");
+                    empty.className = "text-muted mb-0";
+                    empty.textContent = canJoin
+                        ? "No lobbies right now — create one below or use quick play!"
+                        : "No lobbies right now — set your name and start one!";
+                    list.appendChild(empty);
+                    return;
+                }
+                lobbies.forEach(function (lobby) {
+                    var row = document.createElement("div");
+                    row.className = "d-flex justify-content-between align-items-center border-bottom border-secondary py-2";
+
+                    var info = document.createElement("div");
+                    var title = document.createElement("strong");
+                    title.textContent = lobby.name;
+                    var status = document.createElement("span");
+                    status.className = "badge ml-2 " + (lobby.inGame ? "badge-warning" : "badge-success");
+                    status.textContent = lobby.inGame ? "in game" : "waiting";
+                    var playersLine = document.createElement("div");
+                    playersLine.className = "small";
+                    playersLine.textContent = lobby.playerCount + "/" + lobby.maxPlayers + " players: " + lobby.players.join(", ");
+                    info.appendChild(title);
+                    info.appendChild(status);
+                    info.appendChild(playersLine);
+
+                    var joinButton = document.createElement("a");
+                    joinButton.className = "btn btn-primary btn-sm";
+                    if (!lobby.inGame && lobby.playerCount < lobby.maxPlayers) {
+                        if (canJoin) {
+                            joinButton.href = "/game?lobby=" + encodeURIComponent(lobby.name);
+                            joinButton.textContent = "Join";
+                        } else {
+                            joinButton.className += " disabled";
+                            joinButton.textContent = "Join";
+                            joinButton.title = "Set your name first to join";
+                        }
+                    } else {
+                        joinButton.className += " disabled";
+                        joinButton.textContent = lobby.inGame ? "Started" : "Full";
+                    }
+
+                    row.appendChild(info);
+                    row.appendChild(joinButton);
+                    list.appendChild(row);
+                });
+            }
+
+            var lastLobbiesJson = null;
+            function refreshLobbies() {
+                fetch("/lobbies")
+                    .then(function (res) { return res.json(); })
+                    .then(function (lobbies) {
+                        var json = JSON.stringify(lobbies);
+                        if (json === lastLobbiesJson)
+                            return; // nothing changed, don't rebuild the list under the user's cursor
+                        lastLobbiesJson = json;
+                        renderLobbies(lobbies);
+                    })
+                    .catch(function () {});
+            }
+            refreshLobbies();
+            setInterval(refreshLobbies, 3000);
+        </script>
 
         <div class="mt-4">
             <h5>Special cards:</h5>

@@ -21,7 +21,9 @@ Original code from [CodeStix](https://github.com/CodeStix/shithead-the-game).
 
 The current state of the game requires a HTTP connection, won't work with HTTPS.
 
-To deploy to localhost put "localhost:81" in the GameScene.js websocket variable or IP address for online.
+When opened via localhost the game connects to ws://localhost:3001 automatically; for online deploys put your server IP/domain in the GameScene.js websocket variable.
+
+Lobbies: the start page lists all open lobbies (name, players, status) with join buttons, refreshed every 3 seconds via GET /lobbies. Create a named lobby from the form, or use Quick play to join any open lobby. Empty lobbies are removed automatically.
 
 To deploy you can use ''npm start''. 
 

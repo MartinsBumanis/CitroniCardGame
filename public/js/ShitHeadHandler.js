@@ -1,6 +1,6 @@
 class ShitHeadHandler extends GameScene {
-    constructor(localPlayerName) {
-        super(localPlayerName);
+    constructor(localPlayerName, lobbyName) {
+        super(localPlayerName, lobbyName);
 
         this.registerCommand("turn", (args) => this.setTurn(args[1]));
     }

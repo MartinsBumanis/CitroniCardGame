@@ -23,9 +23,9 @@ cardTypeValueToSpriteFrame = function(cardType, cardValue, cardVisible)
 
 class UnoHandler extends GameScene 
 {
-    constructor(localPlayerName) 
+    constructor(localPlayerName, lobbyName)
     {
-        super(localPlayerName);
+        super(localPlayerName, lobbyName);
 
         this.registerCommand("turn", (args) => this.setTurn(args[1]));
     }
